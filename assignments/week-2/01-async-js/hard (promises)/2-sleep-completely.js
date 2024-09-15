@@ -6,8 +6,12 @@
 
 function sleep(milliseconds) {
     return new Promise((resolve) => {
-        setTimeout(resolve, milliseconds); 
-    });
+        const start = Date.now()
+        while (Date.now() - start < milliseconds) {
+            // Busy wait loop
+        }
+        resolve()
+    })
 }
 
 module.exports = sleep;
