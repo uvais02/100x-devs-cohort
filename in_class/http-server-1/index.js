@@ -1,6 +1,7 @@
 const express = require("express")
 
 const app = express()
+app.use(express.json())
 
 var users = [{
     name: 'John',
@@ -23,13 +24,20 @@ app.get("/", (req, res) => {
     
     let healthyKidneys = users[n].kidneys.filter(kidney => kidney.healthy)
     res.status(200).send({
+        'Name' : users[n].name,
         'Total Kidneys'  : users[n].kidneys.length,
         'Healthy kidneys': healthyKidneys.length
     });
 })
 
 app.post("/", (req, res) => {
+    const name = req.body.name
 
+    if (users.some(user => user.name == name))
+        return res.status(400).send("User already exists!")
+
+    users.push(req.body)
+    res.status(200).send({msg: "done!"})
 })
 
 app.put("/", (req, res) => {
