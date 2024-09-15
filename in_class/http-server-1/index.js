@@ -40,8 +40,18 @@ app.post("/", (req, res) => {
     res.status(200).send({msg: "done!"})
 })
 
-app.put("/", (req, res) => {
+app.put("/:name", (req, res) => {
+    const name = req.params.name;
+    const user = users.find(user => user.name === name);
 
+    if (!user) {
+        return res.status(400).send("User doesn't exist!");
+    }
+
+    user.kidneys.push({ healthy: true });
+    res.status(200).send({
+        msg: `Added one healthy kidney for ${name}`
+    })
 })
 
 app.delete("/", (req, res) => {
