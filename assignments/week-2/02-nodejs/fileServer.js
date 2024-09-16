@@ -38,7 +38,7 @@ app.get('/file/:fileName', (req, res) => {
 
 app.use((req, res, next) => {
   res.status(404).send('Route not found');
-});
+})
 
 app.listen(3000, () => {
   console.log('Server started!')
