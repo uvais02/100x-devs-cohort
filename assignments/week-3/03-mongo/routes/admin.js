@@ -13,8 +13,11 @@ router.post('/signup', async (req, res) => {
             return res.status(409).json({ msg: 'Admin already exists!' });
         }
 
-        const newAdmin = new Admin({username, password});
-        await newAdmin.save();
+        await Admin.create({
+            username,
+            password
+        });
+        
         return res.status(201).json({ msg: 'Admin registered successfully' });
 
     } catch (err) {
@@ -24,10 +27,15 @@ router.post('/signup', async (req, res) => {
 
 router.post('/courses', adminMiddleware, (req, res) => {
     // Implement course creation logic
+    const { title, description, price, imageLink } = req.body;
 });
 
-router.get('/courses', adminMiddleware, (req, res) => {
+router.get('/courses', adminMiddleware, async (req, res) => {
     // Implement fetching all courses logic
+    const courses = await Course.find({});
+    res.status(200).json({
+        courses: courses
+    })
 });
 
 module.exports = router;
