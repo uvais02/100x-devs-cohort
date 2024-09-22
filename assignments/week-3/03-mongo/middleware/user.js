@@ -8,10 +8,11 @@ async function userMiddleware(req, res, next) {
     const user = await User.findOne({username, password});
     if (user) {
         next();
+    } else {
+        res.status(403).json({
+            msg: "User doesn't exist"
+        })
     }
-    res.status(403).json({
-        msg: "User doesn't exist"
-    })
 }
 
 module.exports = userMiddleware;

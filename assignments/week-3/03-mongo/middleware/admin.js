@@ -9,10 +9,11 @@ async function adminMiddleware(req, res, next) {
     const admin = await Admin.findOne({username, password});
     if (admin) {
         next();
+    } else {
+        res.status(403).json({
+            msg: "Admin doesn't exist"
+        })
     }
-    res.status(403).json({
-        msg: "Admin doesn't exist"
-    })
 }
 
 module.exports = adminMiddleware;
