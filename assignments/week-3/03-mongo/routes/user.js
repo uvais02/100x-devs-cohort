@@ -62,7 +62,7 @@ router.post('/courses/:courseId', userMiddleware, async (req, res) => {
                 purchasedCourses: 1
             }
         );
-        
+
         if (user.purchasedCourses.includes(courseId)) {
             return res.status(400).json({
                 msg: "You have already purchased this course!"
@@ -93,8 +93,41 @@ router.post('/courses/:courseId', userMiddleware, async (req, res) => {
     }
 });
 
-router.get('/purchasedCourses', userMiddleware, (req, res) => {
+router.get('/purchasedCourses', userMiddleware, async (req, res) => {
     // Implement fetching purchased courses logic
+    const {username, password} = req.headers;
+
+    try {
+        const user = await User.findOne(
+            {
+                username
+            },
+            {
+                purchasedCourses: 1
+            }
+        );
+
+        const purchased = await Course.find({
+                                _id: {
+                                    "$in": user.purchasedCourses
+                                }
+                            });
+
+        res.status(200).json(
+            {
+                courses: purchased
+            }
+        );
+    } catch(err) {
+        res.status(500).json(
+            {
+                msg: "Error while getting purchased courses!"
+            }
+        );
+    }
+
+
+
 });
 
 module.exports = router
