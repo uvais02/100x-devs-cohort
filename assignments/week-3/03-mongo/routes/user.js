@@ -27,8 +27,19 @@ router.post('/signup', async (req, res) => {
 
 });
 
-router.get('/courses', (req, res) => {
+router.get('/courses', async (req, res) => {
     // Implement listing all courses logic
+    try {
+        const allCourse = await Course.find({});
+        res.status(200).json({
+            courses: allCourse
+        });
+        
+    } catch(err) {
+        res.status(500).json({
+            msg: "Error while getting all the courses!"
+        });
+    }
 });
 
 router.post('/courses/:courseId', userMiddleware, (req, res) => {
