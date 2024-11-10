@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Todo App</title>
+  </head>
+  <script>
+    let id = 0;
+    function addTodo() {
+        id += 1
+
+        const title = document.getElementById("title").value;
+        const description = document.getElementById("description").value;
+        
+        const innerDiv = document.createElement("div")
+        innerDiv.setAttribute("id", id)
+
+        const innerTitleDiv = document.createElement("div")
+        innerTitleDiv.innerHTML = title
+        innerDiv.appendChild(innerTitleDiv)
+
+        const innerDescrDiv = document.createElement("div")
+        innerDescrDiv.innerHTML = description
+        innerDiv.appendChild(innerDescrDiv)
+
+        const innerButton = document.createElement("button")
+        innerButton.innerHTML = "Mark as done"
+        innerButton.setAttribute("onclick", `markAsDone(${id})`)
+        innerDiv.appendChild(innerButton)
+
+        document.getElementById("container").appendChild(innerDiv)
+    }
+  
+    function markAsDone(id) {
+        const element = document.getElementById(id)
+        element.children[2].innerHTML = "Done!"
+    }
+  </script>
+  <body>
+    <div>
+        <input id="title" type="text" placeholder="title"/>
+        <input id="description" type="text" placeholder="description"/>
+        <button onclick="addTodo()">Add todo</button>
+        <div id="container">
+
+        </div>
+    </div>
+  </body>
+</html>
