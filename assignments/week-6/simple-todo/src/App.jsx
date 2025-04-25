@@ -18,8 +18,8 @@ function App() {
 
     return (
         <>
-            <button onClick={addTodo}>Add TODO</button>
-            {todos.map((todo, index) => <Todo key={index} title={todo.title} description={todo.description} />)}
+            <button style={{marginLeft: '20px'}} onClick={addTodo}>Add TODO</button>
+            {todos.map((todo, index) => <CardWrapper children={<Todo key={index} title={todo.title} description={todo.description} />} />)}
         </>
     )
 }
@@ -29,6 +29,14 @@ function Todo({title, description}) {
         <div className="todo">
             <h2>{title}</h2>
             <p>{description}</p>
+        </div>
+    )
+}
+
+function CardWrapper({children}) {
+    return (
+        <div style={{border: '2px solid black', margin: '20px'}} className="card">
+            {children}
         </div>
     )
 }
