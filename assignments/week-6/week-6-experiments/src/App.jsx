@@ -1,10 +1,17 @@
+import { useState } from 'react'
 import './App.css'
 
 function App() {
+  const [firstHeaderState, setFirstHeaderState] = useState("header1")
+
+  function handleClick() {
+    setFirstHeaderState("header" + Math.random())
+  }
 
   return (
     <>
-      <Header title={'header1'}/>
+    <button onClick={handleClick}>click me to change the title</button>
+      <Header title={firstHeaderState}/>
       <Header title={'header2'}/>
     </>
   )
