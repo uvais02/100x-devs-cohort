@@ -1,9 +1,13 @@
 import './App.css'
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 function App() {
     useEffect(() => {
-        alert('useEffect called')
+        const interval = setInterval(() => {
+            console.log('useEffect called')
+        }, 10000);
+
+        return () => clearInterval(interval);
     }, []);
 
   return (
